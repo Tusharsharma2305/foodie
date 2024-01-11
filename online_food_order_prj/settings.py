@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 
 
 # Custom authentication backend for customer_table - manu
-AUTHENTICATION_BACKENDS = ['Home_App.views.CustomerTableBackend']
+AUTHENTICATION_BACKENDS = ['Home_App.views.CustomerTableBackend',
+                           'Home_App.views.AdminTableBackend',
+                           'django.contrib.auth.backends.ModelBackend']
 
 
 

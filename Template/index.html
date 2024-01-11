@@ -17,8 +17,10 @@
     - custom css link
   -->
     <link rel="stylesheet" href="{% static 'css/style.css' %} " />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
     <!-- 
     - google font link
@@ -29,6 +31,16 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Rubik:wght@400;500;600;700&family=Shadows+Into+Light&display=swap"
       rel="stylesheet"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- 
     - preload images
@@ -47,7 +59,7 @@
     />
     <link rel="preload" as="image" href="{% static 'images/hero-bg.jpg' %}" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body id="top">
@@ -63,7 +75,7 @@
           >
         </h1>
 
-        <nav class="navbar" data-navbar style="z-index:1">
+        <nav class="navbar" data-navbar style="z-index: 1">
           <ul class="navbar-list">
             <li class="nav-item">
               <a href="{% url 'home' %}" class="navbar-link" data-nav-link
@@ -72,28 +84,59 @@
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'about' %}" class="navbar-link" data-nav-link>About Us</a>
+              <a href="{% url 'about' %}" class="navbar-link" data-nav-link
+                >About Us</a
+              >
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'shop' %}" class="navbar-link" data-nav-link>Shop</a>
+              <a href="{% url 'shop' %}" class="navbar-link" data-nav-link
+                >Shop</a
+              >
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'blog' %}" class="navbar-link" data-nav-link>Blog</a>
+              <a href="{% url 'blog' %}" class="navbar-link" data-nav-link
+                >Blog</a
+              >
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'contact' %}" class = "navbar-link" data-nav-link>Contact Us</a>
+              <a href="{% url 'contact' %}" class="navbar-link" data-nav-link
+                >Contact Us</a
+              >
             </li>
-            
-            {% if user.is_authenticated %}
+
+            <!-- <li class="nav-item">
+              <button class="nav-link" onclick="window.location.href='/profile'">Profile</button>
+            </li> -->
+
+            {% if not request.session.islogin %}
+            <li class="nav-item">
+              <a href="{% url 'login' %}" class="navbar-link" data-nav-link
+                >login</a
+              >
+            </li>
+            {% else %}
+
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="navbar-link" data-nav-link
+                >logout</a
+              >
+            </li>
+            {% endif %}
+
+            <!-- {% if user.is_authenticated %}
             <li><a href="/gotocart" class="navbar-link"> Go To Cart </a></li>
             <li><a href="/signout" class="navbar-link"> Log Out </a></li>
-            <!-- <li><a href="#" class="navbar-link"> Welcome {{ fname }} </a></li> -->
             {% else %}
             <li><a href="/login" class="navbar-link"> Sign In </a></li>
-            {% endif %}
+            {% endif %} -->
+            <!-- {% if request.session.islogin %}
+    <li><a href="/signout">Logout</a></li>
+{% else %}
+    <li><a href="/login">Login</a></li>
+{% endif %} -->
           </ul>
         </nav>
 
@@ -106,8 +149,7 @@
 
           <a class="admin-dash-btn" href="/login-admin">Admin Dashboard</a>
 
-          
-          {% if user.is_authenticated %}
+          <!-- {% if user.is_authenticated %}
           <button class="name-logo">
             <li>
               <a href="#">
@@ -121,7 +163,7 @@
               </a>
             </li>
           </button>
-          {% endif %}
+          {% endif %} -->
 
           <button
             class="nav-toggle-btn"
@@ -187,7 +229,7 @@
 
               <a href="{% static  'reservation' %}">
                 <button class="btn">Book A Table</button>
-            </a>
+              </a>
             </div>
 
             <figure class="hero-banner">
@@ -870,8 +912,6 @@
                 alt="clouds"
                 class="w-100"
               />
-
-              
             </figure>
           </div>
         </section>
@@ -1479,7 +1519,7 @@
     <!-- 
     - ionicon link
   -->
-  <script src="{% static 'js/script.js' %} " ></script>
+    <script src="{% static 'js/script.js' %} "></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
@@ -1488,46 +1528,5 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
-    
-
-
-
-    <!-- <script>
-    window.onscroll = function() {myFunction()};
-    
-    var navbar = document.getElementById('navbar')
-    var sticky = navbar.offsetTop;
-    
-    function myFunction() {
-      if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky")
-      } else {
-        navbar.classList.remove("sticky");
-      }
-    }
-    </script> -->
-
-    <!-- <script>
-      window.onscroll = function () {
-          myFunction();
-      };
-  
-      var navbar = document.getElementById("navbar");
-      var header = document.getElementById("header");
-      var sticky = navbar.offsetTop;
-  
-      function myFunction() {
-          var scrollPosition = window.pageYOffset;
-  
-          if (scrollPosition >= sticky) {
-              navbar.classList.add("sticky");
-              header.style.backgroundColor = "black"; // Set the background color for sticky navbar
-          } else {
-              navbar.classList.remove("sticky");
-              header.style.backgroundColor = "grey"; // Set to transparent or your default background color
-          }
-      }
-  </script> -->
-  
   </body>
 </html>

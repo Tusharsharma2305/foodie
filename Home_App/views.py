@@ -14,6 +14,7 @@ from Home_App.forms import *
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import get_user_model
 
 
 # Create your views here.
@@ -48,6 +49,7 @@ def shop(request):
 def reservation(request):
     return render(request,'reservation.html')
 
+
 # for customers
 
 class CustomLoginView(LoginView):
@@ -62,57 +64,54 @@ class CustomerTableBackend(ModelBackend):
 
     
  # need to check
-    def login_user(request):
-        if request.method == 'POST':
-            params =  dict(request.POST)
-            print(params['username'])
-            username = params['username'][0]
-            password = params['pass1'][0]
+   def login_user(request):
+    if request.method == 'POST':
+        params = dict(request.POST)
+        username = params['username'][0]
+        password = params['pass1'][0]
 
-            try:
-                # check if the credentials are in customer table or not
-                customer = customer_table.objects.get(user_id=username, password=password)
+        try:
+            # Check if the credentials are in the customer table or not
+            customer = customer_table.objects.get(user_id=username, password=password)
             
-                #creating a User instance using customer_table data
-                user = User(
-                    id=customer.customer_id,
-                    username=customer.user_id,
-                    first_name=customer.first_name,
-                    last_name=customer.last_name,
-                    email=customer.email_id,
-                    password=customer.password,
-                )
-                print("Authenticated as customer:", user)
-                return user
-            except customer_table.DoesNotExist:
-                pass
 
-            if user is not None:
-                login(request,user)
-                fname = user.first_name
-                return render(request,"index.html", {'fname':fname})
-            else:
-                messages.error(request,"Invalid Credentials!")
-                return redirect('index')
-            
-        return render(request,'login.html')
+            # Create a User instance using customer_table data
+            user = User(
+                id=customer.customer_id,
+                username=customer.user_id,
+                first_name=customer.first_name,
+                last_name=customer.last_name,
+                email=customer.email_id,
+                password=customer.password,
+            )
+            print("Authenticated as customer:", user)
+
+            # Log in the user
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  # Specify the backend
+            request.session['islogin'] = True
+
+            fname = user.first_name
+            return render(request, "index.html", {'fname': fname})
+
+        except customer_table.DoesNotExist:
+            # Handle invalid credentials
+            messages.error(request, "Invalid Credentials!")
+            return redirect('index')
+
+    return render(request, 'login.html')
+
+
+
+
         
-    
-
-
-    
-
-
-
-    
+ 
+User = get_user_model()
 # For Admin auntheciation check krna hai
 class AdminTableBackend(ModelBackend):
     def authenticate(self, request, user_name=None, password=None, **kwargs):
-    
         try:
             #check if the credentials are in admin table or not
             admin_user = admin_table.objects.get(user_name=user_name, password=password)
-
             #creating a user instance using admin data
             user = User(
                 id=admin_user.admin_id,
@@ -120,16 +119,12 @@ class AdminTableBackend(ModelBackend):
                 password=admin_user.password,
                 # is_admin=admin_user.is_admin,
             )
-
             # user.is_admin = admin_user.is_admin
             # print("Authenticated as admin:", user)
             return user
-        
         except admin_table.DoesNotExist:
             return None
 
-        
-    
     # for Admin login user 
         
     def login_user(request):
@@ -137,23 +132,21 @@ class AdminTableBackend(ModelBackend):
             user_name = request.POST.get('user_name')
             password = request.POST.get('password')
 
-            #using custom authentication method
-            user = authenticate(request,username=user_name, password=password)
+            # Using custom authentication method
+            user = authenticate(request, username=user_name, password=password)
+
 
             if user is not None:
-                # user credentails are correct then log in the user
-                login(request,user)
-                # user_name = user.user_name
-                print("no error")
-                return render(request,"admin-dashboard.html", {'user_name':user_name})
+                # User credentials are correct, then log in the user
+                login(request, user)
+                return render(request, "admin-dashboard.html", {'user_name': user_name})
             
             else:
-                # user credentials are incorrect, display an error message
-                messages.error(request,"Invalid Credentials!")
-                print("error")
+                # User credentials are incorrect, display an error message
+                messages.error(request, "Invalid Credentials!")
                 return redirect('index')
-            
-        return render(request,'admin-login.html')
+        
+        return render(request, 'admin-login.html')
     
 
 
@@ -196,9 +189,12 @@ def signup(request):
 
 
 def signout(request):
+    context={}
     logout(request)
-    messages.success(request,"Logout Successfully")
-    return render(request,'index.html')
+    request.session['islogin'] = False
+    context['message'] = ("Logged out successfully")
+    messages.success(request, "Logged out successfully")
+    return render(request,'index.html',context)
 
 
 def index(request):

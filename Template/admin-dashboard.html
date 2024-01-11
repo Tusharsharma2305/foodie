@@ -8,8 +8,21 @@
     <meta name="viewport" content="width=device-width,  
                    initial-scale=1.0">
     <title>Foodie</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{% static 'css/admin-dash-style.css' %} ">
     <!-- <link rel="stylesheet" href="responsive.css"> -->
+    <script>
+         function performLogout() {
+        // Your animation function here (if needed)
+
+        Swal.fire({
+            title: 'Looged Out!',
+            text: 'success',
+            icon: 'success'
+        });
+    }
+       
+      </script>
 </head>
 
 <body>
@@ -82,7 +95,8 @@
                     </div>
 
                     <div class="nav-option signout">
-                        <a href="{% url 'signout'  %}">
+                        
+                        <a onclick="performLogout()" href="{% url 'home'  %}">
                             <h3>Logout</h3>
                         </a>
                     </div>
