@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foodie - Supper delicious Burger in town!</title>
+
+    <!-- 
+    - favicon
+  -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+
+    <!-- 
+    - custom css link
+  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %} " />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- 
+    - google font link
+  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Rubik:wght@400;500;600;700&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 
+    - preload images
+  -->
+    <link
+      rel="preload"
+      as="image"
+      href="{% static 'images/hero-banner.png' %}"
+      media="min-width(768px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="{% static 'images/hero-banner-bg.png' %}"
+      media="min-width(768px)"
+    />
+    <link rel="preload" as="image" href="{% static 'images/hero-bg.jpg' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body id="top">
+    <!-- 
+    - #HEADER
+  -->
+
+    <header class="header" id="header" data-header>
+      <div class="container" id="navbar">
+        <h1>
+          <a href="{% url 'home' %}" class="logo"
+            >Foodie<span class="span">.</span></a
+          >
+        </h1>
+
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="navbar-link" data-nav-link
+                >Home</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'about' %}" class="navbar-link" data-nav-link>About Us</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'shop' %}" class="navbar-link" data-nav-link>Shop</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'blog' %}" class="navbar-link" data-nav-link
+                >Blog</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'contact' %}" class="navbar-link" data-nav-link
+                >Contact Us</a
+              >
+            </li>
+            <!-- Adding signout-singin nav - Manu -->
+            {% if user.is_authenticated %}
+            <li><a href="/gotocart" class="navbar-link"> Go To Cart </a></li>
+            <li><a href="/signout" class="navbar-link"> Log Out </a></li>
+            <!-- <li><a href="#" class="navbar-link"> Welcome {{ fname }} </a></li> -->
+            {% else %}
+            <li><a href="/login" class="navbar-link"> Sign In </a></li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <div class="header-btn-group">
+          <button class="search-btn" aria-label="Search" data-search-btn>
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
+
+          <button class="btn btn-hover">Reservation</button>
+
+          <a class="admin-dash-btn" href="/admin-login">Admin Dashboard</a>
+
+          <!-- Name logo - Manu -->
+          {% if user.is_authenticated %}
+          <button class="name-logo">
+            <li>
+              <a href="#">
+                {% if user.is_admin %}
+                <span class="logo-letter">A</span>
+                {% else %}
+                <span class="logo-letter"
+                  >{{ fname|slice:":1" | default:'' |upper }}</span
+                >
+                {% endif %}
+              </a>
+            </li>
+          </button>
+          {% endif %}
+
+          <button
+            class="nav-toggle-btn"
+            aria-label="Toggle Menu"
+            data-menu-toggle-btn
+          >
+            <span class="line top"></span>
+            <span class="line middle"></span>
+            <span class="line bottom"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- navbar Ends Here -->
+
+    {% block content %} {% endblock %}
+
+    <!-- Footer START -->
+    <footer class="footer">
+      <!-- <div class="footer-top" style="background-image: url('{% static 'images/footer-illustration.png' %}')"> -->
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="" class="logo">Foodie<span class="span">.</span></a>
+
+            <p class="footer-text">
+              Financial experts support or help you to to find out which way you
+              can raise your funds more.
+            </p>
+
+            <ul class="social-list">
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-pinterest"></ion-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Contact Info</p>
+            </li>
+
+            <li>
+              <p class="footer-list-item">+1 (062) 109-9222</p>
+            </li>
+
+            <li>
+              <p class="footer-list-item">Info@YourGmail24.com</p>
+            </li>
+
+            <li>
+              <address class="footer-list-item">
+                153 Williamson Plaza, Maggieberg, MT 09514
+              </address>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Opening Hours</p>
+            </li>
+
+            <li>
+              <p class="footer-list-item">Monday-Friday: 08:00-22:00</p>
+            </li>
+
+            <li>
+              <p class="footer-list-item">Tuesday 4PM: Till Mid Night</p>
+            </li>
+
+            <li>
+              <p class="footer-list-item">Saturday: 10:00-16:00</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright-text">
+            &copy; 2022 <a href="#" class="copyright-link">codewithsadee</a> All
+            Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static 'js/script.js' %} "></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    
+
+
+    <!-- <script>
+    window.onscroll = function() {myFunction()};
+    
+    var navbar = document.getElementById('navbar')
+    var sticky = navbar.offsetTop;
+    
+    function myFunction() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+    </script> -->
+
+    <!-- <script>
+        window.onscroll = function () {
+            myFunction();
+        };
+    
+        var navbar = document.getElementById("navbar");
+        var header = document.getElementById("header");
+        var sticky = navbar.offsetTop;
+    
+        function myFunction() {
+            var scrollPosition = window.pageYOffset;
+    
+            if (scrollPosition >= sticky) {
+                navbar.classList.add("sticky");
+                header.style.backgroundColor = "black"; // Set the background color for sticky navbar
+            } else {
+                navbar.classList.remove("sticky");
+                header.style.backgroundColor = "grey"; // Set to transparent or your default background color
+            }
+        }
+    </script> -->
+  </body>
+</html>

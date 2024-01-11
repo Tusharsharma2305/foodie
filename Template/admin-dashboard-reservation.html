@@ -1,0 +1,78 @@
+{% extends 'admin-dashboard.html' %}
+
+{% block title %} Reservations {% endblock %}
+
+{% block content %}
+
+<section class="reservation-table-section">
+    <div class="reservation-table-section">
+        <div class="report-container">
+            <div class="report-header">
+                <h1 class="recent-orders">Reservations List</h1>
+            </div>
+
+            <div class="report-body">
+                <div class="report-topic-heading">
+                    <h3 class="t-op">Name</h3>
+                    <h3 class="t-op">Date</h3>
+                    <h3 class="t-op">Time</h3>
+                    <h3 class="t-op">No of Person</h3>
+                    <h3 class="t-op">Message</h3>
+                    <h3 class="t-op">Request Status</h3>
+                    <h3 class="t-op"></h3>
+                </div>
+                <div class="items">
+                    {% for reservation in reservations %}
+                    <div class="item1">
+                        <h3 class="t-op-nextlvl">{{ reservation.booking_name}}</h3>
+                        <h3 class="t-op-nextlvl">{{ reservation.date}}</h3>
+                        <h3 class="t-op-nextlvl">{{ reservation.time}}</h3>
+                        <h3 class="t-op-nextlvl">{{ reservation.total_person}}</h3>
+                        <h3 class="t-op-nextlvl">{{ reservation.message}}</h3>
+                        <h3 class="t-op-nextlvl">{{ reservation.status}}</h3>
+                        <h3 class="t-op-nextlvl">
+                            <div class="update-btn">
+                                <a href="{% url 'approve_reservation_request' reservation_id=reservation.reservation_id %}" class="btn-edit {% if reservation.status != 'pending' %}disabled{% endif %}">Approve </a>
+                                <!-- <a href="/admin-dashboard-category-edit/{{ category_id }}" class="btn-edit">Edit</a> -->
+                                <a href="{% url 'deny_reservation_request' reservation_id=reservation.reservation_id %}" class="btn-delete {% if reservation.status != 'pending' %}disabled{% endif %}">Deny</a>
+                            </div>
+                        </h3>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<style>
+    .btn-edit,
+    .btn-delete,
+    .btn-add {
+        border: none;
+        color: white;
+        padding: 8px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+    .btn-edit, .btn-add {
+        background-color: #008CBA;
+    }
+    .btn-delete {
+        background-color: #f44336;
+    }
+    .disabled {
+        background-color: grey;
+        pointer-events: none;
+        opacity:0.6s;
+    }
+</style>
+
+{% endblock %}

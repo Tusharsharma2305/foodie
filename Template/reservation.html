@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% if reservation_success %}
+        <script>
+          alert(
+            "Thank you for booking request, We will notify you promtly regarding the status of your request."
+          );
+        </script>
+        {% endif %}
+        <section class="section section-divider white blog" id="blog">
+            <div class="container">
+          <form
+            action="{% url 'make_reservation' %}"
+            method="post"
+            class="footer-form"
+          >
+            {% csrf_token %} {{ form.as_p }}
+
+            <p class="footer-list-title">Book a Table</p>
+
+            <div class="input-wrapper">
+              <label for="name">Name:</label>
+              <input
+                type="text"
+                name="booking_name"
+                required
+                placeholder="Your Name"
+                aria-label="Your Name"
+                class="input-field"
+              />
+
+              <label for="time">Time:</label>
+              <input
+                type="time"
+                name="time"
+                required
+                placeholder="Time"
+                aria-label="Time"
+                class="input-field"
+              />
+            </div>
+
+            <div class="input-wrapper">
+              <label for="person">Total no of person:</label>
+              <select
+                name="total_person"
+                aria-label="Total person"
+                class="input-field"
+              >
+                <option value="person">Person</option>
+                <option value="2">2 Person</option>
+                <option value="3">3 Person</option>
+                <option value="4">4 Person</option>
+                <option value="5">5 Person</option>
+              </select>
+
+              <label for="date">Date:</label>
+              <input
+                type="date"
+                name="date"
+                aria-label="Reservation date"
+                class="input-field"
+              />
+            </div>
+
+            <label for="message">Any message:</label>
+            <textarea
+              name="message"
+              required
+              placeholder="Message"
+              aria-label="Message"
+              class="input-field"
+            ></textarea>
+
+            <button type="submit" class="btn">Book a Table</button>
+          </form>
+          </div>
+        </section>
+{% endblock %}

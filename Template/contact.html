@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message %}
+<script>
+  // Replace the default alert with SweetAlert
+  Swal.fire({
+    title: 'Done!',
+    text: '{{ message }}',
+    icon: 'success'
+  });
+</script>
+{% endif %}
+        
+        <!-- Contact Start -->
+        <section class="section section-divider white blog" id="blog" style="background-color: sonic-silver;">
+          <div class="container">
+          
+            <h2 class="h2 section-title">
+              Contact <span class="span">Us</span>
+            </h2>
+            <hr>
+      
+            <p class="section-text" style="color: black;">
+              Feel Free to contact us on the given details.
+            </p>
+            
+            <div class="container" style="margin-top: 5%;">
+              <div class="row">
+                
+                <div class="contact-info">
+                  <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                      <i class="fa fa-home"></i>
+                    </div>
+                    
+                    <div class="contact-info-content">
+                      <h4 style="color: black;">Address</h4>
+                      <p style="color: black;">Sikanderpur, Gurugram</p>
+                    </div>
+                  </div>
+                  
+                  <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                      <i class="fa fa-phone"></i>
+                    </div>
+                    
+                    <div class="contact-info-content">
+                      <h4 style="color: black;">Phone</h4>
+                      <p style="color: black;">+91-123456789</p>
+                    </div>
+                  </div>
+                  
+                  <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                      <i class="fa fa-envelope"></i>
+                    </div>
+                    
+                    <div class="contact-info-content">
+                      <h4 style="color: black;"">Email</h4>
+                     <p style="color: black;">support@gmail.com</p>
+                    </div>
+                  </div>
+                </div>
+                <hr class="vertical-line">
+                <div class="contact-form">
+                  <form action="" id="contact-form" method="post">
+                    {% csrf_token %}
+                    <h2>Send Message</h2>
+                    <div class="input-box">
+                      <label for="name">Name</label>
+                      <input type="text" required="true" name="name">
+                      
+                    </div>
+                    
+                    <div class="input-box">
+                        <label for="email">Email</label>
+                      <input type="email" required="true" name="email">
+                      <!-- <span>Email</span> -->
+                    </div>
+                    
+                    <div class="input-box">
+                        <label>Type your Message...</label>
+                      <textarea required="true" name="message"></textarea>
+                      
+                    </div>
+                    
+                    <div class="input-box">
+                      <!-- <input type="submit"  class="btn btn-hover"> -->
+                      <button class="btn btn-hover" value="Send" name="" style="width: 100%;align-items: center;text-align: center;">Send</button>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </section>
+        <!-- Contact End -->
+
+
+{% endblock %}

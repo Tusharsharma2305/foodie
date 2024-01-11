@@ -1,0 +1,22 @@
+html, body {
+    min-height: 100%;
+    margin: 0;
+}
+.container {
+    display: flex;
+    height: 100vh;
+    background-image: url('../images/loginBackground.jpeg');
+    background-size: cover;  
+    background-repeat: no-repeat;
+}
+.left {
+    width: 50%; 
+    background-color: bisque;
+    opacity: 0.8;
+    height: 200px;
+    margin: 20% 10%;
+}
+.right {
+    width: 40%;
+    margin: 20% 20%;
+}

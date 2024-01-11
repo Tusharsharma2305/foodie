@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- <section class="section section-divider white blog" id="blog">
+    <h2 class="h2 section-title" style="text-align: center;">
+        About <span class="span">Us</span>
+      </h2>
+      <
+
+      <p class="section-text" style="color: black; text-align: center; font-weight: bold;">
+        Please Login to order anything!
+      </p>hr>
+      <br> -->
+<section class="section section-divider gray about" id="about">
+    <h2 class="h2 section-title" style="margin: 0 43% 0 43%;">
+        About <span class="span">Us</span>
+      </h2>
+      
+
+      <p class="section-text" style="color: black; text-align: center; font-weight: bold;">
+        We are the number One in the town since 1970. we love to provide service to you
+      </p><hr>
+      <br>
+    <div class="container">
+      <div class="about-banner">
+        <img
+          src="{% static 'images/about-banner.png' %}"
+          width="509"
+          height="459"
+          loading="lazy"
+          alt="Burger with Drinks"
+          class="w-100 about-img"
+        />
+
+        <!-- <img
+          src="{% static 'images/sale-shape-red.png' %}"
+          width="216"
+          height="226"
+          alt="get up to 50% off now"
+          class="abs-img scale-up-anim"
+        /> -->
+      </div>
+
+      <div class="about-content">
+        <h2 class="h2 section-title">
+          Caferio, Burgers, and Best Pizzas
+          <span class="span">in Town!</span>
+        </h2>
+
+        <p class="section-text">
+          The restaurants in Hangzhou also catered to many northern
+          Chinese who had fled south from Kaifeng during the Jurchen
+          invasion of the 1120s, while it is also known that many
+          restaurants were run by families.
+        </p>
+
+        <ul class="about-list">
+          <li class="about-item">
+            <ion-icon name="checkmark-outline"></ion-icon>
+
+            <span class="span">Delicious & Healthy Foods</span>
+          </li>
+
+          <li class="about-item">
+            <ion-icon name="checkmark-outline"></ion-icon>
+
+            <span class="span">Spacific Family And Kids Zone</span>
+          </li>
+
+          <li class="about-item">
+            <ion-icon name="checkmark-outline"></ion-icon>
+
+            <span class="span">Music & Other Facilities</span>
+          </li>
+
+          <li class="about-item">
+            <ion-icon name="checkmark-outline"></ion-icon>
+
+            <span class="span">Fastest Food Home Delivery</span>
+          </li>
+        </ul>
+
+        <button class="btn btn-hover">Order Now</button>
+      </div>
+    </div>
+    <hr>
+  </section>
+{% endblock %}
