@@ -59,34 +59,33 @@ class CustomLoginView(LoginView):
 
 
 class CustomerTableBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        try:
-            # check if the credentials are in customer table or not
-            customer = customer_table.objects.get(user_id=username, password=password)
-        
-            #creating a User instance using customer_table data
-            user = User(
-                id=customer.customer_id,
-                username=customer.user_id,
-                first_name=customer.first_name,
-                last_name=customer.last_name,
-                email=customer.email_id,
-                password=customer.password,
-            )
-            print("Authenticated as customer:", user)
-            return user
-        except customer_table.DoesNotExist:
-            pass
 
-        
     
  # need to check
     def login_user(request):
         if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('pass1')
+            params =  dict(request.POST)
+            print(params['username'])
+            username = params['username'][0]
+            password = params['pass1'][0]
 
-            user = authenticate(request,username=username, password=password)
+            try:
+                # check if the credentials are in customer table or not
+                customer = customer_table.objects.get(user_id=username, password=password)
+            
+                #creating a User instance using customer_table data
+                user = User(
+                    id=customer.customer_id,
+                    username=customer.user_id,
+                    first_name=customer.first_name,
+                    last_name=customer.last_name,
+                    email=customer.email_id,
+                    password=customer.password,
+                )
+                print("Authenticated as customer:", user)
+                return user
+            except customer_table.DoesNotExist:
+                pass
 
             if user is not None:
                 login(request,user)
@@ -139,16 +138,19 @@ class AdminTableBackend(ModelBackend):
             password = request.POST.get('password')
 
             #using custom authentication method
-            user = authenticate(request,user_name=user_name, password=password)
+            user = authenticate(request,username=user_name, password=password)
 
             if user is not None:
                 # user credentails are correct then log in the user
                 login(request,user)
                 # user_name = user.user_name
+                print("no error")
                 return render(request,"admin-dashboard.html", {'user_name':user_name})
+            
             else:
                 # user credentials are incorrect, display an error message
                 messages.error(request,"Invalid Credentials!")
+                print("error")
                 return redirect('index')
             
         return render(request,'admin-login.html')
@@ -208,6 +210,9 @@ def index(request):
 
 
 def adminLogin(request):
+
+    # if request.method == 'POST':
+
     return render(request,'admin-login.html')
 
 def adminDashboard(request, section=None):
