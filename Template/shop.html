@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+
+<script>
+  foodItems = JSON.parse("{{ food|escapejs }}");
+</script>
+
 <section class="section food-menu" id="food-menu">
     <div class="container">
       <p class="section-subtitle">Popular Dishes</p>
@@ -36,7 +41,7 @@
         </li>
       </ul>
 
-      <ul class="food-menu-list">
+      <ul id="food-items-list" class="food-menu-list">
         <li>
           <div class="food-menu-card">
             <div class="card-banner">
@@ -285,4 +290,6 @@
       </ul>
     </div>
   </section>
+  <script src="{% static 'js/shop.js' %} "></script>
+
 {% endblock %}

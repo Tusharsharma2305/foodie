@@ -6,10 +6,11 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
-from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, order_table, reservation_table
+from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, order_table, reservation_table, cart_table
 # from django.contrib.auth import get_user_model
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.http import JsonResponse
+from django.core import serializers
 from Home_App.forms import *
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -44,8 +45,13 @@ def blog(request):
     return render(request,'blog.html')
 def about(request):
     return render(request,'about.html')
+
 def shop(request):
-    return render(request,'shop.html')
+    food = food_table.objects.all()
+    food_json = serializers.serialize('json', food)
+    return render(request,'shop.html',{"food": food_json})
+
+
 def reservation(request):
     return render(request,'reservation.html')
 
@@ -62,47 +68,56 @@ class CustomLoginView(LoginView):
 
 class CustomerTableBackend(ModelBackend):
 
+    User = get_user_model()
+    def add_to_cart(request,food_id):
+
+        foodItem = food_table.objects.get(food_id=food_id)
+        customer = customer_table.objects.get(user_id=request.user)
+
+
+        cart_check = cart_table.objects.get(food_id=foodItem,customer_id=customer)
+
+        if cart_check is None:
+            cartItem = cart_table(food_id=foodItem,customer_id=customer,quantity = 1)
+            cartItem.save()
+            print(cartItem)
+        else:
+            cart_check.quantity = cart_check.quantity + 1
+            cart_check.save()
+
+        return HttpResponse("Success")
     
- # need to check
-   def login_user(request):
-    if request.method == 'POST':
-        params = dict(request.POST)
-        username = params['username'][0]
-        password = params['pass1'][0]
 
-        try:
-            # Check if the credentials are in the customer table or not
-            customer = customer_table.objects.get(user_id=username, password=password)
-            
+    # need to check
+    def login_user(request):
+        if request.method == 'POST':
+            params = dict(request.POST)
+            username = params['username'][0]
+            password = params['pass1'][0]
 
-            # Create a User instance using customer_table data
-            user = User(
-                id=customer.customer_id,
-                username=customer.user_id,
-                first_name=customer.first_name,
-                last_name=customer.last_name,
-                email=customer.email_id,
-                password=customer.password,
-            )
-            print("Authenticated as customer:", user)
+            try:
+                # # Check if the credentials are in the customer table or not
+                # customer = customer_table.objects.get(user_id=username, password=password)
+                
+                # Use the authenticate method provided by Django
+                user = authenticate(request, username=username, password=password)
+                print("Authenticated as customer:", user)
 
-            # Log in the user
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')  # Specify the backend
-            request.session['islogin'] = True
+                # Log in the user
+                login(request, user)  # Specify the backend
+                request.session['islogin'] = True
+                print(request.user.id)
+                fname = user.first_name
+                return render(request, "index.html", {'fname': fname})
 
-            fname = user.first_name
-            return render(request, "index.html", {'fname': fname})
+            except customer_table.DoesNotExist:
+                # Handle invalid credentials
 
-        except customer_table.DoesNotExist:
-            # Handle invalid credentials
-            messages.error(request, "Invalid Credentials!")
-            return redirect('index')
+                print("thi sis exception")
+                messages.error(request, "Invalid Credentials!")
+                return redirect('index')
 
-    return render(request, 'login.html')
-
-
-
-
+        return render(request, 'login.html')
         
  
 User = get_user_model()
