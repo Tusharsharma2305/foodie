@@ -105,3 +105,13 @@ class reservation_table(models.Model):
     def __str__(self):
         return f"Reservation {self.reservation_id} for {self.customer_id} at {self.date} {self.time} - Status: {self.status}"
 
+
+
+# Customer Table
+class cart_table(models.Model):
+    cart_id = models.AutoField(primary_key=True)
+    customer_id = models.ForeignKey(customer_table,on_delete=models.CASCADE)
+    food_id = models.ForeignKey(food_table,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.cart_id)

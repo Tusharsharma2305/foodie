@@ -14,10 +14,11 @@ urlpatterns = [
     path('dj-admin/', admin.site.urls),
     path('login/',hv.CustomerTableBackend.login_user, name='login'),
     path('login-admin/',hv.AdminTableBackend.login_user, name='login-admin'),
+
     path('signup/',hv.signup, name='signup'),
     path('signout/',hv.signout, name='signout'),
     # path('index/',hv.index, name='index'),
-    path('admin-login/',hv.adminLogin, name='admin-login'),
+    # path('login-admin/',hv.hv.AdminTableBackend.login_user, name='login-admin'),
     path('approve-reservation/<int:reservation_id>/', hv.approve_reservation_request, name='approve_reservation_request'),
     path('deny-reservation/<int:reservation_id>/', hv.deny_reservation_request, name='deny_reservation_request'),
     path('admin-dashboard/',hv.adminDashboard, name='admin-dashboard'),
@@ -36,7 +37,7 @@ urlpatterns = [
     
     path('make_reservation/', hv.make_reservation, name='make_reservation'),
     
-
     # path('newHome/',hv.newHome, name='newHome'),
+    # path(r'^admin/', admin.site.urls),
 
 ]
