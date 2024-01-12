@@ -2,6 +2,11 @@
 from django.contrib import admin
 from django.urls import path, include
 from Home_App import views as hv
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from Home_App.views import Order, OrderConfirmation, OrderPayConfirmation
 
 urlpatterns = [
     path('home/',hv.index, name='home'),  
@@ -38,6 +43,11 @@ urlpatterns = [
     # Need to ask
     
     path('make_reservation/', hv.make_reservation, name='make_reservation'),
+
+
+    path('order/', Order.as_view(), name='order'),
+    path('order-confirmation/<int:pk>', OrderConfirmation.as_view(),name='order-confirmation'),
+    path('payment-confirmation/', OrderPayConfirmation.as_view(),name='payment-confirmation'),
     
     # path('newHome/',hv.newHome, name='newHome'),
     # path(r'^admin/', admin.site.urls),
