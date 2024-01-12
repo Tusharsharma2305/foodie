@@ -111,7 +111,7 @@
               <button class="nav-link" onclick="window.location.href='/profile'">Profile</button>
             </li> -->
 
-            {% if not request.session.islogin %}
+            <!-- {% if not request.session.islogin %}
             <li class="nav-item">
               <a href="{% url 'login' %}" class="navbar-link" data-nav-link
                 >login</a
@@ -124,6 +124,15 @@
                 >logout</a
               >
             </li>
+            {% endif %} -->
+
+            <!-- Adding signout-singin nav - Manu -->
+            {% if user.is_authenticated %}
+            <li><a href="{%  url 'cart' %}" class="navbar-link"> Go To Cart </a></li>
+            <li><a href="{% url 'signout' %}" class="navbar-link"> Log Out </a></li>
+            <!-- <li><a href="#" class="navbar-link"> Welcome {{ fname }} </a></li> -->
+            {% else %}
+            <li><a href="/login" class="navbar-link"> Sign In </a></li>
             {% endif %}
 
             <!-- {% if user.is_authenticated %}
