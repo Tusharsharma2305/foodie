@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
-from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, reservation_table, cart_table
+from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, reservation_table, cart_table, order_item_table
 # from django.contrib.auth import get_user_model
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.http import JsonResponse
@@ -21,8 +21,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.core.mail import send_mail
 from .models import MenuItem, Category, OrderModel
-
-
+import requests
+import json
+from requests.auth import HTTPBasicAuth
+from django.http import JsonResponse
 # Create your views here.
 
 # for index.html
@@ -54,6 +56,19 @@ def cart(request):
     customer = customer_table.objects.get(user_id=request.user)
     cart_items = cart_table.objects.filter(customer_id=customer).select_related('food_id')
     print(cart_items)
+
+    # customer = customer_table.objects.get(user_id=request.user)
+    # orders = OrderModel.objects.filter(customer=customer)
+    # d = []
+
+    # for item in orders:
+    #     d.push(item.order_id)
+
+    # order_item = order_item_table.objects.filter(order_id__in = d)
+
+
+    print(cart_items)
+
     return render(request,'cart.html',{ "cart": cart_items })
 
 def cart_remove(request,cart_id):
@@ -75,6 +90,117 @@ def cart_quantity_remove(request,cart_id):
         cart.quantity = cart.quantity - 1
         cart.save()
     return redirect('cart')
+
+
+
+    # Obtain access token
+def get_access_token():
+    client_id = "AY2N4I3ri2td4gkHC3Ffp_keANUTeZfZCvkKycDpnMzR3TdjLK5Ze0-qN-nQsfdTJMmKsXkk0ohprBd9"
+    client_secret = "EPsve_pcVXwPRcpp9ShJKqE7Um2X7AmT2i2QCW9f426JLeOUYCTwyEcWpWBOPiJ1jTbVmt9Wtyp39eZn"
+    url = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
+    data = {'grant_type': 'client_credentials'}
+    auth = (client_id, client_secret)
+    response = requests.post(url, data=data, auth=auth)
+    return response.json().get('access_token')
+
+def generate_order(request):
+    
+    access_token = get_access_token()
+
+    customer = customer_table.objects.get(user_id=request.user)
+    cartItems =cart_table.objects.filter(customer_id=customer)
+    totalPrice = 0 
+    print("sadfasd")
+
+    for item in cartItems:
+        totalPrice = totalPrice + (item.food_id.price * item.quantity)
+
+
+    url = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {access_token}',
+    }
+
+    data = {
+        "purchase_units": [
+            {
+                "amount": {
+                    "currency_code": "USD",
+                    "value": totalPrice
+                },
+                "reference_id": "d9f80740-38f0-11e8-b467-0ed5f89f718b",
+                "shipping": {
+                    "address": {
+                        "address_line_1": "123 Main St",
+                        "address_line_2": "Apt 4",
+                        "admin_area_2": "City",
+                        "admin_area_1": "State",
+                        "postal_code": "12345",
+                        "country_code": "US"
+                    }
+                }
+            }
+        ],
+        "intent": "CAPTURE",
+        "payment_source": {
+            "paypal": {
+                "experience_context": {
+                    "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED",
+                    "payment_method_selected": "PAYPAL",
+                    "brand_name": "Foodie INC",
+                    "locale": "en-US",
+                    "landing_page": "LOGIN",
+                    "shipping_preference": "SET_PROVIDED_ADDRESS",
+                    "user_action": "PAY_NOW",
+                    "return_url": "http://example.com/returnUrl",
+                    "cancel_url": "http://example.com/cancelUrl"
+                }
+            }
+        }
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+    res = response.json()
+    return JsonResponse(res)
+
+
+def order_capture(request,paypal_order_id):
+
+   # Retrieve data from the request body
+    data = json.loads(request.body)
+
+    # Extract required fields
+    name = data.get('name')
+    email = data.get('email')
+    street = data.get('street')
+    city = data.get('city')
+    state = data.get('state')
+    zip_code = data.get('zip_code')
+
+
+    customer = customer_table.objects.get(user_id=request.user)
+    cartItems =cart_table.objects.filter(customer_id=customer)
+
+    print(name)
+    print(email)
+    print(street)
+    print(city)
+    print(state)
+    print(paypal_order_id )
+    print(request.user)
+
+    order = OrderModel(price=0,customer=customer,name=name,email=email,street=street,city=city,state=state,zip_code=zip_code,paypal_order_id=paypal_order_id)
+    order.save()
+    order = OrderModel.objects.get(paypal_order_id=paypal_order_id)
+    for item in cartItems:
+        temp = order_item_table(food_id=item.food_id,order_id=order,quantity=item.quantity)
+        temp.save()
+        item.delete()
+        order.price = order.price + (item.food_id.price * item.quantity)
+    order.is_paid = True
+    order.save()
+    return JsonResponse({"res":"success"})
 
 
 def shop(request):

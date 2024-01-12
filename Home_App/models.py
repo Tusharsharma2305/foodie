@@ -118,8 +118,6 @@ class cart_table(models.Model):
         return str(self.cart_id)
     
 
-
-
     
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
@@ -151,15 +149,17 @@ class OrderModel(models.Model):
     state = models.CharField(max_length=15, blank=True)
     zip_code = models.IntegerField(blank=True, null=True)
     is_paid = models.BooleanField(default=False)
+    paypal_order_id = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'
 
-# order Items  Table
+# order Items  Tablefo
 class order_item_table(models.Model):
-    cart_item_id = models.AutoField(primary_key=True)
+    order_item_id = models.AutoField(primary_key=True)
     order_id = models.ForeignKey(OrderModel,on_delete=models.CASCADE)
     food_id = models.ForeignKey(food_table,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
     def __str__(self):
-        return str(self.cart_id)
+        return str(self.order_item_id)
     

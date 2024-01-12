@@ -21,6 +21,8 @@ urlpatterns = [
     path('login/',hv.CustomerTableBackend.login_user, name='login'),
     path('login-admin/',hv.AdminTableBackend.login_user, name='login-admin'),
 
+    path('order/generate/',hv.generate_order,name='generate-order'),
+    path('order/<str:paypal_order_id>/capture',hv.order_capture,name='order-capture'),
     path('cart/<int:food_id>',hv.CustomerTableBackend.add_to_cart,name='add-cart'),
     path('cart-remove/<int:cart_id>',hv.cart_remove,name='cart-remove'),
     path('cart-quantity-add/<int:cart_id>',hv.cart_quantity_add,name='cart-quantity-add'),

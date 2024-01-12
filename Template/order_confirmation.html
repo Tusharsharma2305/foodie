@@ -74,7 +74,7 @@ const csrftoken = getCookie('csrftoken');
       return actions.payment.create({
         transactions: [{
           amount: {
-            total: '{{ price }}',
+            total: '100.00',
             currency: 'USD'
           }
         }]
