@@ -150,29 +150,27 @@
         </nav>
 
         <div class="header-btn-group">
-          <button class="search-btn" aria-label="Search" data-search-btn>
+          <!-- <button class="search-btn" aria-label="Search" data-search-btn>
             <ion-icon name="search-outline"></ion-icon>
-          </button>
+          </button> -->
 
           <button class="btn btn-hover">Reservation</button>
 
-          <a class="admin-dash-btn" href="/login-admin">Admin Dashboard</a>
+          <a class="btn btn-hover" href="/login-admin" style="border-radius: 50px; padding: 10px 13px;">Admin Dashboard</a>
 
-          <!-- {% if user.is_authenticated %}
+          {% if user.is_authenticated %}
           <button class="name-logo">
             <li>
               <a href="#">
                 {% if user.is_admin %}
                 <span class="logo-letter">A</span>
                 {% else %}
-                <span class="logo-letter"
-                  >{{ fname|slice:":1" | default:'' |upper }}</span
-                >
+                <span class="logo-letter">{{ fname|slice:":1" | default:'' |upper }}</span>
                 {% endif %}
               </a>
             </li>
           </button>
-          {% endif %} -->
+          {% endif %}
 
           <button
             class="nav-toggle-btn"
@@ -557,7 +555,7 @@
         - #FOOD MENU
       -->
 
-        <section class="section food-menu" id="food-menu">
+        <!-- <section class="section food-menu" id="food-menu">
           <div class="container">
             <p class="section-subtitle">Popular Dishes</p>
 
@@ -840,7 +838,7 @@
               </li>
             </ul>
           </div>
-        </section>
+        </section> -->
 
         <!-- 
         - #CTA

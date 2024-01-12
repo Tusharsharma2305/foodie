@@ -16,7 +16,7 @@
         // Your animation function here (if needed)
 
         Swal.fire({
-            title: 'Looged Out!',
+            title: 'Sign Out!',
             text: 'success',
             icon: 'success'
         });
@@ -34,16 +34,19 @@
             <div class="logo">Foodie</div>
         </div>
 
-        <div class="searchbar">
+        <!-- <div class="searchbar">
             <input type="text" placeholder="Search">
             <div class="searchbtn">
                 <img src="{% static 'images/search.png' %}" class="icn srchicn" alt="search-icon">
             </div>
-        </div>
+        </div> -->
 
         <div class="message">
-            <div class="circle"></div>
-            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" class="icn" alt="">
+            {% if reservation_count > 0 %}
+            <img src="{% static 'images/bell-notification.png' %}" class="icn" alt="">
+            {% else %}
+            <img src="{% static 'images/bell.png' %}" class="icn" alt="">
+            {% endif %}
             <div class="dp">
                 <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
                     class="dpicn" alt="dp">
@@ -82,11 +85,11 @@
                         </a>
                     </div>
 
-                    <div class="nav-option option5">
+                    <!-- <div class="nav-option option5">
                         <a href="{% url 'admin-dashboard-section' section='recentOrders' %}">
                             <h3> Recent Orders</h3>
                         </a>
-                    </div>
+                    </div> -->
 
                     <div class="nav-option option6">
                         <a href="{% url 'admin-dashboard-section' section='reservation' %}">
@@ -94,9 +97,8 @@
                         </a>
                     </div>
 
-                    <div class="nav-option signout">
-                        
-                        <a onclick="performLogout()" href="{% url 'home'  %}">
+                    <div class="nav-option logout">
+                        <a href="{% url 'signout' %}">
                             <h3>Logout</h3>
                         </a>
                     </div>
@@ -116,7 +118,7 @@
 
                 <div class="box box1">
                     <div class="text">
-                        
+
                         <h2 class="topic-heading">{{ food_item_count }}</h2>
                         <h2 class="topic">Total Food Items</h2>
                     </div>
@@ -130,7 +132,7 @@
                     </div>
 
                 </div>
-<!-- 
+                <!-- 
                 <div class="box box3">
                     <div class="text">
                         <h2 class="topic-heading">11</h2>
@@ -138,11 +140,11 @@
                     </div>
 
                 </div> -->
-                
+
                 <div class="box box4">
                     <div class="text">
-                        <h2 class="topic-heading">15</h2>
-                        <h2 class="topic">Best Sellers</h2>
+                        <h2 class="topic-heading">{{ reservation_count }}</h2>
+                        <h2 class="topic">Total Pending Reservation Request</h2>
                     </div>
                 </div>
                 <div class="box box5">
@@ -162,9 +164,70 @@
                 {% endif %}
             </div> -->
 
-            <div class="main-container">
+            <div class="main-content">
                 {% block content %}
-                   <p>pie chart of order-category or order-date</p>
+                <div class="graphs-containers" style="display: flex;">
+                    <div id="line-container" style="width: 600px; height: 400px; margin-top: 8%; margin-left: 5%;">
+                        <canvas id="graph"></canvas>
+                        <h4 style="display: flex; justify-content: center; margin-top: 2%;">Total Reservations</h4>
+                    </div>
+                    <div id="pie-chart-container"
+                        style="width: 300px; height: 300px; margin-top: 8%; margin-left: 10%;">
+                        <canvas id="chart"></canvas>
+                        <h4 style="display: flex; justify-content: center; margin-top: 3%;">Total Orders</h4>
+                    </div>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+
+
+                <script>
+                    let ctx = document.getElementById("graph").getContext("2d");
+
+                    let chart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                            datasets: [
+                                {
+                                    label: "Reservations",
+                                    backgroundColor: "hsl(31, 84%, 50%);",
+                                    borderColor: "grey",
+                                    data: [2, 5, 6, 1, 7, 2, 4]
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                text: "Reservation - Graph",
+                                display: true
+                            }
+                        }
+                    });
+
+                    let ctx2 = document.getElementById("chart").getContext("2d");
+
+                    let chart2 = new Chart(ctx2, {
+                        type: "pie",
+                        data: {
+                            labels: ["2021", "2022", "2023", "2024"],
+                            datasets: [
+                                {
+                                    label: "Total Orders",
+                                    backgroundColor: ["#FF5733", "#6A9EB4", "#99C24D", "#006E90"],
+                                    borderColor: "#008CBA",
+                                    data: [124, 150, 120, 20]
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                text: "Pie Chart",
+                                display: true
+                            }
+                        }
+                    });
+
+                </script>
                 {% endblock %}
             </div>
 

@@ -11,35 +11,37 @@
                 <h1 class="recent-orders">Reservations List</h1>
             </div>
 
-            <div class="report-body">
-                <div class="report-topic-heading">
-                    <h3 class="t-op">Name</h3>
-                    <h3 class="t-op">Date</h3>
-                    <h3 class="t-op">Time</h3>
-                    <h3 class="t-op">No of Person</h3>
-                    <h3 class="t-op">Message</h3>
-                    <h3 class="t-op">Request Status</h3>
-                    <h3 class="t-op"></h3>
-                </div>
-                <div class="items">
+            <table class="report-body">
+                <thead class="report-topic-head">
+                    <tr>
+                    <th class="t-op">Name</th>
+                    <th class="t-op">Date</th>
+                    <th class="t-op">Time</th>
+                    <th class="t-op">No of Person</th>
+                    <th class="t-op">Message</th>
+                    <th class="t-op">Request Status</th>
+                    <th class="t-op"></th>
+                    </tr>
+                </thead>
+                <tbody class="items12">
                     {% for reservation in reservations %}
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">{{ reservation.booking_name}}</h3>
-                        <h3 class="t-op-nextlvl">{{ reservation.date}}</h3>
-                        <h3 class="t-op-nextlvl">{{ reservation.time}}</h3>
-                        <h3 class="t-op-nextlvl">{{ reservation.total_person}}</h3>
-                        <h3 class="t-op-nextlvl">{{ reservation.message}}</h3>
-                        <h3 class="t-op-nextlvl">{{ reservation.status}}</h3>
-                        <h3 class="t-op-nextlvl">
+                    <tr>
+                        <td class="t-op-nextlvl">{{ reservation.booking_name}}</td>
+                        <td class="t-op-nextlvl">{{ reservation.date}}</td>
+                        <td class="t-op-nextlvl">{{ reservation.time}}</td>
+                        <td class="t-op-nextlvl">{{ reservation.total_person}}</td>
+                        <td class="t-op-nextlvl">{{ reservation.message}}</td>
+                        <td class="t-op-nextlvl">{{ reservation.status}}</td>
+                        <td class="t-op-nextlvl">
                             <div class="update-btn">
                                 <a href="{% url 'approve_reservation_request' reservation_id=reservation.reservation_id %}" class="btn-edit {% if reservation.status != 'pending' %}disabled{% endif %}">Approve </a>
                                 <!-- <a href="/admin-dashboard-category-edit/{{ category_id }}" class="btn-edit">Edit</a> -->
                                 <a href="{% url 'deny_reservation_request' reservation_id=reservation.reservation_id %}" class="btn-delete {% if reservation.status != 'pending' %}disabled{% endif %}">Deny</a>
                             </div>
-                        </h3>
-                    </div>
+                        </td>
+                    </tr>
                     {% endfor %}
-                </div>
+                </tbody>
             </div>
         </div>
     </div>
@@ -72,6 +74,25 @@
         background-color: grey;
         pointer-events: none;
         opacity:0.6s;
+    }
+    .report-body {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    /* Style the header cells */
+    .report-topic-head th {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border: 0px solid #ddd;
+        text-align: left;
+    }
+
+    /* Style the data cells */
+    .items12 td {
+        padding: 10px;
+        border: 0px solid #ddd;
     }
 </style>
 

@@ -55,7 +55,7 @@
             <div class="food-menu-card">
               <div class="card-banner">
                 <img
-                  src="{% static item.food_id.img_name %}"
+                  src="{% static 'item.food_id.img_name' %}"
                   width="300"
                   height="300"
                   loading="lazy"
@@ -96,11 +96,11 @@
               <div class="price-wrapper">
                   <p class="price-text">Quantity: </p>
   
-                 
-                  <a href="{% url 'cart-quantity-add' cart_id=item.cart_id%}"> <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button></a>
-                  <input type="number" value="{{ item.quantity }}" readonly >
                   <a href="{% url 'cart-quantity-remove' cart_id=item.cart_id%}"> <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i></a>
                   </button>
+                  <input type="number" value="{{ item.quantity }}" readonly >
+                  <a href="{% url 'cart-quantity-add' cart_id=item.cart_id%}"> <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button></a>
+                  
                   <a href="{% url 'cart-remove' cart_id=item.cart_id%}"><button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button></a>
                 </div>
             </div>
@@ -135,72 +135,22 @@
           aria-label="Your Name"
           class="input-field"
         />
-        <!-- <label for="name">Name:</label>
-        <input
-          type="text"
-          name="booking_name"
-          required
-          placeholder="Your Name"
-          aria-label="Your Name"
-          class="input-field"
-        /> -->
+        
         <label for="name">Email Address</label>
-        <input required class="input-field" type="text" placeholder="example@company.com" name="email" />
+        <input required class="input-field" type="text" placeholder="example@gmail.com" name="email" />
 
         <label for="name">Home Address</label>
-        <input required class="input-field" type="text" placeholder="1234 Main St" name="street" />
+        <input required class="input-field" type="text" placeholder="Street No." name="street" />
 
         <label for="name">City</label>
-        <input required class="input-field" type="text" placeholder="San Francisco" name="city" />
+        <input required class="input-field" type="text" placeholder="Delhi" name="city" />
 
         <label for="name">State</label>
-        <input required class="input-field" type="text" placeholder="CA" name="state" />
+        <input required class="input-field" type="text" placeholder="Delhi" name="state" />
 
         <label for="name">Zip Code</label>
-        <input required class="input-field" type="text" placeholder="94117" name="zip" />
+        <input required class="input-field" type="text" placeholder="1100" name="zip" />
 
-        <!-- <label for="time">Time:</label>
-        <input
-          type="time"
-          name="time"
-          required
-          placeholder="Time"
-          aria-label="Time"
-          class="input-field"
-        />
-      </div>
-
-      <div class="input-wrapper">
-        <label for="person">Total no of person:</label>
-        <select
-          name="total_person"
-          aria-label="Total person"
-          class="input-field"
-        >
-          <option value="person">Person</option>
-          <option value="2">2 Person</option>
-          <option value="3">3 Person</option>
-          <option value="4">4 Person</option>
-          <option value="5">5 Person</option>
-        </select>
-
-        <label for="date">Date:</label>
-        <input
-          type="date"
-          name="date"
-          aria-label="Reservation date"
-          class="input-field"
-        />
-      </div>
-
-      <label for="message">Any message:</label>
-      <textarea
-        name="message"
-        required
-        placeholder="Message"
-        aria-label="Message"
-        class="input-field"
-      ></textarea> -->
       <div style="text-align: center;display: flex;">
         <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Submit Order!</button>
       </div>

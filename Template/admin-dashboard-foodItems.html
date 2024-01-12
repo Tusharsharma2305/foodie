@@ -12,30 +12,30 @@
                 <a href="{% url 'admin-dashboard-foodItems-add' %}" class="btn-add">Add more items</a>
             </div>
 
-            <div class="report-body">
-                <div class="report-topic-heading">
-                    <h3 class="t-op">Food-Id</h3>
-                    <h3 class="t-op">Category-Id</h3>
-                    <h3 class="t-op">Title</h3>
-                    <h3 class="t-op">Price</h3>
-                    <h3 class="t-op"></h3>
-                </div>
-                <div class="items">
+            <table class="report-body">
+                <thead class="report-topic-head">
+                    <th class="t-op">Food-Id</th>
+                    <th class="t-op">Category-Id</th>
+                    <th class="t-op">Title</th>
+                    <th class="t-op">Price</th>
+                    <th class="t-op"></th>
+                </thead>
+                <tbody class="items12">
                     {% for item in foodItems %}
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">{{ item.food_id}}</h3>
-                        <h3 class="t-op-nextlvl"> {{ item.category_id}} </h3>
-                        <h3 class="t-op-nextlvl">{{ item.food_title}}</h3>
-                        <h3 class="t-op-nextlvl">{{ item.price}}</h3>
-                        <h3 class="t-op-nextlvl">
+                    <tr>
+                        <td class="t-op-nextlvl">{{ item.food_id}}</td>
+                        <td class="t-op-nextlvl"> {{ item.category_id}} </td>
+                        <td class="t-op-nextlvl">{{ item.food_title}}</td>
+                        <td class="t-op-nextlvl">{{ item.price}}</td>
+                        <td class="t-op-nextlvl">
                             <div class="update-btn">
                                 <a href="{% url 'edit_food' food_id=item.food_id %}" class="btn-edit">Edit</a>
                                 <a href="{% url 'delete_food' food_id=item.food_id  %}" class="btn-delete">Delete</a>
                             </div>
-                        </h3>
-                    </div>
+                        </td>
+                    </tr>
                     {% endfor %}
-                </div>
+                </tbody>
             </div>
         </div>
     </div>
@@ -62,6 +62,25 @@
     }
     .btn-delete {
         background-color: #f44336;
+    }
+    .report-body {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    /* Style the header cells */
+    .report-topic-head th {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border: 0px solid #ddd;
+        text-align: left;
+    }
+
+    /* Style the data cells */
+    .items12 td {
+        padding: 10px;
+        border: 0px solid #ddd;
     }
 </style>
 

@@ -434,23 +434,23 @@ def add_foodItems(request):
 class Order(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        appetizers = MenuItem.objects.filter(
-            category__name__contains='Appetizer')
-        entres = MenuItem.objects.filter(category__name__contains='Entre')
-        desserts = MenuItem.objects.filter(category__name__contains='Dessert')
-        drinks = MenuItem.objects.filter(category__name__contains='Drink')
+        # appetizers = MenuItem.objects.filter(
+        #     category__name__contains='Appetizer')
+        # entres = MenuItem.objects.filter(category__name__contains='Entre')
+        # desserts = MenuItem.objects.filter(category__name__contains='Dessert')
+        # drinks = MenuItem.objects.filter(category__name__contains='Drink')
 
         # pass into context
-        context = {
-            'appetizers': appetizers,
-            'entres': entres,
-            'desserts': desserts,
-            'drinks': drinks,
-        }
+        # context = {
+        #     'appetizers': appetizers,
+        #     'entres': entres,
+        #     'desserts': desserts,
+        #     'drinks': drinks,
+        # }
 
         # render the template
         
-        return render(request, 'order.html', context)
+        return render(request, 'order.html')
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('name')
@@ -507,10 +507,10 @@ class Order(View):
             fail_silently=False
         )
 
-        context = {
-            'items': order_items['items'],
-            'price': price
-        }
+        # context = {
+        #     'items': order_items['items'],
+        #     'price': price
+        # }
 
         return redirect('order-confirmation', pk=order.pk)
 
