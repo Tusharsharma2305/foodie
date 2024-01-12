@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
-from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, order_table, reservation_table, cart_table
+from Home_App.models import Contact, customer_table, admin_table, category_table, food_table, reservation_table, cart_table
 # from django.contrib.auth import get_user_model
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.http import JsonResponse

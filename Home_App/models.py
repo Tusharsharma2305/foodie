@@ -121,14 +121,6 @@ class cart_table(models.Model):
 
 
     
-# order Items  Table
-class order_item_table(models.Model):
-    cart_item_id = models.AutoField(primary_key=True)
-    order_id = models.ForeignKey(order_table,on_delete=models.CASCADE)
-    food_id = models.ForeignKey(food_table,on_delete=models.CASCADE)
-    def __str__(self):
-        return str(self.cart_id)
-    
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -148,10 +140,10 @@ class Category(models.Model):
 
 
 class OrderModel(models.Model):
+    order_id = models.AutoField(primary_key=True)
     created_on = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    items = models.ManyToManyField(
-        'MenuItem', related_name='order', blank=True)
+    customer = models.ForeignKey(customer_table,on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=True)
     email = models.CharField(max_length=50, blank=True)
     street = models.CharField(max_length=50, blank=True)
@@ -162,3 +154,12 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'
+
+# order Items  Table
+class order_item_table(models.Model):
+    cart_item_id = models.AutoField(primary_key=True)
+    order_id = models.ForeignKey(OrderModel,on_delete=models.CASCADE)
+    food_id = models.ForeignKey(food_table,on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.cart_id)
+    
