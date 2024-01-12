@@ -2,9 +2,17 @@
 {% block content %}
 {% load static %}
 
-<!-- <script>
-  foodItems = JSON.parse("{{ food|escapejs }}");
-</script> -->
+<script>
+  const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'INR',
+      });
+
+  function priceFunction(id,price){
+    $("#"+id).html(formatter.format(price))
+  }
+
+</script>
 
 <section class="section food-menu" id="food-menu">
     <div class="container">
@@ -18,7 +26,7 @@
         Food is any substance consumed to provide nutritional support for
         an organism.
       </p>
-
+      
       <!-- <ul class="fiter-list">
         <li>
           <button class="filter-btn active">All</button>
@@ -42,309 +50,70 @@
       </ul> -->
 
       <ul id="food-items-list" class="food-menu-list">
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-1.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="Fried Chicken Unlimited"
-                class="w-100"
-              />
 
-              <div class="badge">-15%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
-            </div>
-
-            <div class="wrapper">
-              <p class="category">Chicken</p>
-
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
+        {% for item in cart %}
+          
+          <li>
+            <div class="food-menu-card">
+              <div class="card-banner">
+                <img
+                  src="{% static item.food_id.img_name %}"
+                  width="300"
+                  height="300"
+                  loading="lazy"
+                  alt="{{ item.food_id.food_title }}"
+                  class="w-100"
+                />
+  
+                <!-- <div class="badge">-15%</div> -->
+  
+               
               </div>
-            </div>
-
-            <h3 class="h3 card-title">Fried Chicken Unlimited</h3>
-
-            <div class="price-wrapper">
-              <p class="price-text">Price:</p>
-
-              <data class="price">$49.00</data>
-
-              <del class="del" value="69.00">$69.00</del>
-            </div><hr>
-            <div class="price-wrapper">
-                <p class="price-text">Quantity:</p>
-
-                <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                <input type="number" value="0" readonly >
-                <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
-                </button>
-                <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
+  
+              <div class="wrapper">
+                <p class="category">{{ item.food_id.food_title }}</p>
+  
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
               </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-2.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="Burger King Whopper"
-                class="w-100"
-              />
-
-              <div class="badge">-10%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
-            </div>
-
-            <div class="wrapper">
-              <p class="category">Noddles</p>
-
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </div>
-            </div>
-
-            <h3 class="h3 card-title">Burger King Whopper</h3>
-
-            <div class="price-wrapper">
+  
+              <h3 class="h3 card-title">{{ item.food_id.feature }}</h3>
+  
+              <div class="price-wrapper">
                 <p class="price-text">Price:</p>
   
-                <data class="price">$49.00</data>
+                <data class="price" id="price-data-{{item.cart_id}}">{{ item.food_id.price }}</data>
   
-                <del class="del" value="69.00">$69.00</del>
+                <del class="del" value="{{ item.food_id.price }}" id="price-del-{{item.cart_id}}"></del>
+                <script>
+                  priceFunction( "price-data-{{item.cart_id}}" , {{ item.food_id.price }}*{{ item.quantity }})
+                  priceFunction("price-del-{{item.cart_id}}" , {{ item.food_id.price }}*{{ item.quantity }})
+                </script>
               </div><hr>
               <div class="price-wrapper">
-                  <p class="price-text">Quantity:</p>
+                  <p class="price-text">Quantity: </p>
   
                   <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                  <input type="number" value="0" readonly>
+                  <input type="number" value="{{ item.quantity }}" readonly >
                   <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
                   </button>
                   <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
                 </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-3.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="White Castle Pizzas"
-                class="w-100"
-              />
-
-              <div class="badge">-25%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
             </div>
+          </li>
+        {% endfor %}
 
-            <div class="wrapper">
-              <p class="category">Pizzas</p>
+       
 
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </div>
-            </div>
-
-            <h3 class="h3 card-title">White Castle Pizzas</h3>
-
-            <div class="price-wrapper">
-                <p class="price-text">Price:</p>
-  
-                <data class="price">$49.00</data>
-  
-                <del class="del" value="69.00">$69.00</del>
-              </div><hr>
-              <div class="price-wrapper">
-                  <p class="price-text">Quantity:</p>
-  
-                  <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                  <input type="number" value="0" readonly>
-                  <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
-                  </button>
-                  <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
-                </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-4.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="Bell Burrito Supreme"
-                class="w-100"
-              />
-
-              <div class="badge">-20%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
-            </div>
-
-            <div class="wrapper">
-              <p class="category">Burrito</p>
-
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </div>
-            </div>
-
-            <h3 class="h3 card-title">Bell Burrito Supreme</h3>
-
-            <div class="price-wrapper">
-                <p class="price-text">Price:</p>
-  
-                <data class="price">$49.00</data>
-  
-                <del class="del" value="69.00">$69.00</del>
-              </div><hr>
-              <div class="price-wrapper">
-                  <p class="price-text">Quantity:</p>
-  
-                  <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                  <input type="number" value="0" readonly>
-                  <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
-                  </button>
-                  <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
-                </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-5.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="Kung Pao Chicken BBQ"
-                class="w-100"
-              />
-
-              <div class="badge">-5%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
-            </div>
-
-            <div class="wrapper">
-              <p class="category">Nuggets</p>
-
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </div>
-            </div>
-
-            <h3 class="h3 card-title">Kung Pao Chicken BBQ</h3>
-
-            <div class="price-wrapper">
-                <p class="price-text">Price:</p>
-  
-                <data class="price">$49.00</data>
-  
-                <del class="del" value="69.00">$69.00</del>
-              </div><hr>
-              <div class="price-wrapper">
-                  <p class="price-text">Quantity:</p>
-  
-                  <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                  <input type="number" value="0" readonly>
-                  <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
-                  </button>
-                  <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
-                </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="food-menu-card">
-            <div class="card-banner">
-              <img
-                src="{% static 'images/food-menu-6.png' %}"
-                width="300"
-                height="300"
-                loading="lazy"
-                alt="Wendy's Chicken"
-                class="w-100"
-              />
-
-              <div class="badge">-15%</div>
-
-              <button class="btn food-menu-btn">Order Now</button>
-            </div>
-
-            <div class="wrapper">
-              <p class="category">Chicken</p>
-
-              <div class="rating-wrapper">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </div>
-            </div>
-
-            <h3 class="h3 card-title">Wendy's Chicken</h3>
-
-            <div class="price-wrapper">
-                <p class="price-text">Price:</p>
-  
-                <data class="price">$49.00</data>
-  
-                <del class="del" value="69.00">$69.00</del>
-              </div><hr>
-              <div class="price-wrapper">
-                  <p class="price-text">Quantity:</p>
-  
-                  <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
-                  <input type="number" value="0" readonly>
-                  <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
-                  </button>
-                  <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
-                </div>
-          </div>
-        </li>
       </ul>
     </div>
   </section>
 
-  <!-- <script src="{% static 'js/shop.js' %} "></script> -->
+  <script src="{% static 'js/cart.js' %} "></script>
 
 {% endblock %}

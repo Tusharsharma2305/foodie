@@ -51,12 +51,23 @@ def blog(request):
 def about(request):
     return render(request,'about.html')
 def cart(request):
-    return render(request,'cart.html')
+    customer = customer_table.objects.get(user_id=request.user)
+    cart_items = cart_table.objects.filter(customer_id=customer).select_related('food_id')
+    print(cart_items)
+    return render(request,'cart.html',{ "cart": cart_items })
+
 
 def shop(request):
+    category = request.GET.get('category')
+    print(category)
     food = food_table.objects.all()
+
+    if category is not None:
+        food = food.filter(category_id=category)
+
+
     food_json = serializers.serialize('json', food)
-    return render(request,'shop.html',{"food": food_json})
+    return render(request,'shop.html',{"food": food_json, "category": category})
 
 
 def reservation(request):

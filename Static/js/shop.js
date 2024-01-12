@@ -60,6 +60,9 @@ $(document).ready(function(){
         $("#food-items-list").append(it)
     });
 
+    $(`#category-${category}`).addClass('active');
+    console.log(`#category-${category}`);
+
 });
 
 

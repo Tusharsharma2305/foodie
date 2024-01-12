@@ -4,6 +4,8 @@
 
 <script>
   foodItems = JSON.parse("{{ food|escapejs }}");
+  category = "{{ category|escapejs }}";
+
 </script>
 
 <section class="section food-menu" id="food-menu">
@@ -21,23 +23,23 @@
 
       <ul class="fiter-list">
         <li>
-          <button class="filter-btn active">All</button>
+          <a href="{% url 'shop' %}"><button class="filter-btn" id="category-None">All</button></a>
         </li>
 
         <li>
-          <button class="filter-btn">Pizza</button>
+          <a href="{% url 'shop' %}?category=8" >  <button id="category-8" class="filter-btn">Pizza</button> </a>
         </li>
 
         <li>
-          <button class="filter-btn">Burger</button>
+          <a href="{% url 'shop' %}?category=9" ><button id="category-9" class="filter-btn">Burger</button></a>
         </li>
 
         <li>
-          <button class="filter-btn">Drinks</button>
+          <a href="{% url 'shop' %}?category=5" ><button id="category-5" class="filter-btn">Drinks</button></a>
         </li>
 
         <li>
-          <button class="filter-btn">Sandwich</button>
+          <a href="{% url 'shop' %}?category=10" > <button id="category-10" class="filter-btn">Sandwich</button></a>
         </li>
       </ul>
 

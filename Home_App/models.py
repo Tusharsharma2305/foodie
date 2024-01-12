@@ -111,7 +111,7 @@ class reservation_table(models.Model):
 class cart_table(models.Model):
     cart_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(customer_table,on_delete=models.CASCADE)
-    food_id = models.ForeignKey(food_table,on_delete=models.CASCADE)
+    food_id = models.ForeignKey(food_table,on_delete=models.CASCADE,related_name='food_set')
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
