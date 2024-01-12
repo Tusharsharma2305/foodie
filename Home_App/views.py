@@ -56,6 +56,26 @@ def cart(request):
     print(cart_items)
     return render(request,'cart.html',{ "cart": cart_items })
 
+def cart_remove(request,cart_id):
+
+    cart_table.objects.filter(cart_id=cart_id).delete()
+    return redirect('cart')
+
+def cart_quantity_add(request,cart_id):
+
+    cart = cart_table.objects.get(cart_id=cart_id)
+    cart.quantity = cart.quantity + 1
+    cart.save()
+    return redirect('cart')
+
+def cart_quantity_remove(request,cart_id):
+
+    cart = cart_table.objects.get(cart_id=cart_id)
+    if cart.quantity > 1 :
+        cart.quantity = cart.quantity - 1
+        cart.save()
+    return redirect('cart')
+
 
 def shop(request):
     category = request.GET.get('category')

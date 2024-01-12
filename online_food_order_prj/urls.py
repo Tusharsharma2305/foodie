@@ -22,6 +22,9 @@ urlpatterns = [
     path('login-admin/',hv.AdminTableBackend.login_user, name='login-admin'),
 
     path('cart/<int:food_id>',hv.CustomerTableBackend.add_to_cart,name='add-cart'),
+    path('cart-remove/<int:cart_id>',hv.cart_remove,name='cart-remove'),
+    path('cart-quantity-add/<int:cart_id>',hv.cart_quantity_add,name='cart-quantity-add'),
+    path('cart-quantity-remove/<int:cart_id>',hv.cart_quantity_remove,name='cart-quantity-remove'),
 
     path('signup/',hv.signup, name='signup'),
     path('signout/',hv.signout, name='signout'),

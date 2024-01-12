@@ -96,11 +96,12 @@
               <div class="price-wrapper">
                   <p class="price-text">Quantity: </p>
   
-                  <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button>
+                 
+                  <a href="{% url 'cart-quantity-add' cart_id=item.cart_id%}"> <button style="margin-right: 3%;background-color: aquamarine;border-radius: 50%;padding: 8px 15px;"><i class="fa fa-plus"></i></button></a>
                   <input type="number" value="{{ item.quantity }}" readonly >
-                  <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i>
+                  <a href="{% url 'cart-quantity-remove' cart_id=item.cart_id%}"> <button style="margin-right: 3%;background-color: rgb(255, 174, 127);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-minus"></i></a>
                   </button>
-                  <button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button>
+                  <a href="{% url 'cart-remove' cart_id=item.cart_id%}"><button style="margin-right: 3%;background-color: rgb(209, 61, 61);border-radius: 50%;padding: 8px 15px;"><i class="fa fa-trash"></i></button></a>
                 </div>
             </div>
           </li>
