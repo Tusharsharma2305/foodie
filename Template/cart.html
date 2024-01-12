@@ -14,18 +14,16 @@
 
 </script>
 
+
+<div>
 <section class="section food-menu" id="food-menu">
     <div class="container">
       <p class="section-subtitle">Cart Page</p>
 
       <h2 class="h2 section-title">
-        Welcome to your <span class="span">Cart</span>
+        Welcome to <span class="span">Cart</span>
       </h2>
 
-      <p class="section-text">
-        Food is any substance consumed to provide nutritional support for
-        an organism.
-      </p>
       
       <!-- <ul class="fiter-list">
         <li>
@@ -113,6 +111,107 @@
       </ul>
     </div>
   </section>
+
+  <hr><br>
+
+  <section>
+    <form
+      action="{% url 'make_reservation' %}"
+      method="post"
+      class="footer-form"
+    >
+      {% csrf_token %} {{ form.as_p }}
+
+      <p class="footer-list-title" style="text-align: center !important;">Enter Your Details</p>
+
+      <div class="input-wrapper">
+        <label for="name">Full Name</label>
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Your Name"
+          aria-label="Your Name"
+          class="input-field"
+        />
+        <!-- <label for="name">Name:</label>
+        <input
+          type="text"
+          name="booking_name"
+          required
+          placeholder="Your Name"
+          aria-label="Your Name"
+          class="input-field"
+        /> -->
+        <label for="name">Email Address</label>
+        <input required class="input-field" type="text" placeholder="example@company.com" name="email" />
+
+        <label for="name">Home Address</label>
+        <input required class="input-field" type="text" placeholder="1234 Main St" name="street" />
+
+        <label for="name">City</label>
+        <input required class="input-field" type="text" placeholder="San Francisco" name="city" />
+
+        <label for="name">State</label>
+        <input required class="input-field" type="text" placeholder="CA" name="state" />
+
+        <label for="name">Zip Code</label>
+        <input required class="input-field" type="text" placeholder="94117" name="zip" />
+
+        <!-- <label for="time">Time:</label>
+        <input
+          type="time"
+          name="time"
+          required
+          placeholder="Time"
+          aria-label="Time"
+          class="input-field"
+        />
+      </div>
+
+      <div class="input-wrapper">
+        <label for="person">Total no of person:</label>
+        <select
+          name="total_person"
+          aria-label="Total person"
+          class="input-field"
+        >
+          <option value="person">Person</option>
+          <option value="2">2 Person</option>
+          <option value="3">3 Person</option>
+          <option value="4">4 Person</option>
+          <option value="5">5 Person</option>
+        </select>
+
+        <label for="date">Date:</label>
+        <input
+          type="date"
+          name="date"
+          aria-label="Reservation date"
+          class="input-field"
+        />
+      </div>
+
+      <label for="message">Any message:</label>
+      <textarea
+        name="message"
+        required
+        placeholder="Message"
+        aria-label="Message"
+        class="input-field"
+      ></textarea> -->
+      <div style="text-align: center;display: flex;">
+        <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Submit Order!</button>
+      </div>
+
+      
+    </form>
+    <!-- <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Book a Table</button> -->
+  </section>
+
+
+
+</div>
 
   <script src="{% static 'js/cart.js' %} "></script>
 
