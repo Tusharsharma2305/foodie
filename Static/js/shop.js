@@ -1,8 +1,10 @@
+const imgSource = "images/food-menu-1.png";
+
 const listItem = ` <li>
 <div class="food-menu-card">
   <div class="card-banner">
     <img
-      src="{{imgSource}}"
+      src="${imgSource}"
       width="300"
       height="300"
       loading="lazy"
@@ -66,19 +68,42 @@ $(document).ready(function(){
 });
 
 
-function addToCart(food_id){
-    console.log(food_id);
-    $.ajax({url: `/cart/${food_id}`, success: function(result){
-        console.log(result);
-        Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-          }).fire({
-            icon: "success",
-            title: "Added To Cart"
-          });
-
-      }});
+function addToCart(food_id) {
+  // Check if the user is authenticated
+  $.ajax({
+      url: '/check_authentication/',  // Create a Django view to check authentication
+      type: 'GET',
+      success: function(response) {
+          if (response.authenticated) {
+              // User is authenticated, proceed with adding to cart
+              console.log(response.authenticated)
+              $.ajax({
+                  url: `/cart/${food_id}`,
+                  success: function(result) {
+                      console.log(result);
+                      Swal.mixin({
+                          toast: true,
+                          position: 'top-end',
+                          showConfirmButton: false,
+                          timer: 3000,
+                      }).fire({
+                          icon: 'success',
+                          title: 'Added To Cart',
+                      });
+                  },
+              });
+          } else {
+              // User is not authenticated, show login message
+              Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+            }).fire({
+                icon: 'error',
+                title: 'login first',
+            });
+          }
+      },
+  });
 }

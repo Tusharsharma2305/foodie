@@ -471,7 +471,7 @@
     padding-top: 60px;
   } */
 
-  .sticky {
+  /* .sticky {
     position: fixed;
     top: 10%;
     left: 50%;
@@ -482,7 +482,7 @@
     box-shadow: var(--shadow-1);
     height: 0;
     transition: background-color 0.3s ease;
-  }
+  } */
 
   /* Admin dashboard button - manu */
   .admin-dash-btn {

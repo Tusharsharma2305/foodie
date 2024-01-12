@@ -52,6 +52,16 @@ def blog(request):
     return render(request,'blog.html')
 def about(request):
     return render(request,'about.html')
+
+def order_complete(request):
+    messages.success(request, "Your order was successful!")
+    return render(request, 'order_complete.html') # you can pass any context as needed
+
+def check_authentication(request):
+    data = {'authenticated': request.user.is_authenticated}
+    return JsonResponse(data)
+
+@login_required
 def cart(request):
     customer = customer_table.objects.get(user_id=request.user)
     cart_items = cart_table.objects.filter(customer_id=customer).select_related('food_id')

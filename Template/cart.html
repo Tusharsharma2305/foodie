@@ -50,12 +50,13 @@
       <ul id="food-items-list" class="food-menu-list">
 
         {% for item in cart %}
+
           
           <li>
             <div class="food-menu-card">
               <div class="card-banner">
                 <img
-                  src="{% static 'item.food_id.img_name' %}"
+                  src="{% static 'images/food-menu-4.png' %}" 
                   width="300"
                   height="300"
                   loading="lazy"
@@ -114,7 +115,7 @@
   </section>
 
   <hr><br>
-
+  {% if cart %}
   <section>
     <form
       action="{% url 'make_reservation' %}"
@@ -134,25 +135,26 @@
           placeholder="Your Name"
           aria-label="Your Name"
           class="input-field"
+          id="name"
         />
         
         <label for="name">Email Address</label>
-        <input required class="input-field" type="text" placeholder="example@gmail.com" name="email" />
+        <input required class="input-field" type="text" placeholder="example@gmail.com" name="email" id="email"/>
 
         <label for="name">Home Address</label>
-        <input required class="input-field" type="text" placeholder="Street No." name="street" />
+        <input required class="input-field" type="text" placeholder="Street No." name="street" id="street"/>
 
         <label for="name">City</label>
-        <input required class="input-field" type="text" placeholder="Delhi" name="city" />
+        <input required class="input-field" type="text" placeholder="Delhi" name="city" id="city"/>
 
         <label for="name">State</label>
-        <input required class="input-field" type="text" placeholder="Delhi" name="state" />
+        <input required class="input-field" type="text" placeholder="Delhi" name="state" id="state"/>
 
         <label for="name">Zip Code</label>
-        <input required class="input-field" type="text" placeholder="1100" name="zip" />
+        <input required class="input-field" type="text" placeholder="1100" name="zip" id="zip"/>
 
       <div style="text-align: center;display: flex;">
-        <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Submit Order!</button>
+        <!-- <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Submit Order!</button> -->
       </div>
       <div id="paypal-button-container"></div>
       <p id="result-message"></p>
@@ -160,6 +162,7 @@
     </form>
     <!-- <button type="submit" class="btn" style="text-align: center;align-items: center;justify-content: center;display: flex;">Book a Table</button> -->
   </section>
+  {% endif %}
 
 
 
@@ -241,14 +244,22 @@
               // (3) Successful transaction -> Show confirmation or thank you message
               // Or go to another URL:  actions.redirect('thank_you.html');
               const token = '{{ csrf_token }}';
+              let name = document.getElementById('name').value;
+              let email = document.getElementById('email').value;
+              let street = document.getElementById('street').value;
+              let city = document.getElementById('city').value;
+              let state = document.getElementById('state').value;
+              let zip = document.getElementById('zip').value;
+          
               let body = {
-                name : "dasfa",
-                email : "test@gmail.com",
-                street : "asdf",
-                city : "dsaf",
-                state : "sdafas",
-                zip_code: 201102
+                name : name,
+                email : email,
+                street : street,
+                city : city,
+                state : state,
+                zip_code: zip
               }
+              console.log("HIIIIIIIIIIIII",body)
               const response = await fetch(`/order/${data.orderID}/capture`, {
                   method: "POST",
                   headers: {
@@ -258,8 +269,9 @@
                 });
             
             const orderData = await response.json();
+            console.log("order",orderData)
             if(orderData?.res == "success"){
-              
+              console.log("under if",orderData?.res)
               Swal.mixin({
                 toast: true,
                 position: "top-end",

@@ -11,7 +11,7 @@
     <!-- 
     - favicon
   -->
-    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="{%  static 'images/favicon.svg' %}" type="image/svg+xml" />
 
     <!-- 
     - custom css link
@@ -102,13 +102,13 @@
         </nav>
 
         <div class="header-btn-group">
-          <button class="search-btn" aria-label="Search" data-search-btn>
+          <!-- <button class="search-btn" aria-label="Search" data-search-btn>
             <ion-icon name="search-outline"></ion-icon>
-          </button>
+          </button> -->
 
-          <button class="btn btn-hover">Reservation</button>
+          <button class="btn btn-hover" style="border-radius: 50px; padding: 10px 13px;"><a href="#reservation">Reservation</a></button>
 
-          <a class="btn btn-hover" href="/login-admin" style="border-radius: 50px; padding: 10px 13px;">Admin Dashboard</a>
+          <a class="btn btn-hover" href="/login-admin" style="border-radius: 50px; padding: 10px 13px;">Admin login</a>
 
           <!-- Name logo - Manu -->
           {% if user.is_authenticated %}
@@ -188,7 +188,7 @@
             </li>
 
             <li>
-              <p class="footer-list-item">+1 (062) 109-9222</p>
+              <p class="footer-list-item">+91-1234567890</p>
             </li>
 
             <li>
@@ -197,7 +197,7 @@
 
             <li>
               <address class="footer-list-item">
-                153 Williamson Plaza, Maggieberg, MT 09514
+                Sikanderpur, Gurugram
               </address>
             </li>
           </ul>
@@ -225,7 +225,7 @@
       <div class="footer-bottom">
         <div class="container">
           <p class="copyright-text">
-            &copy; 2022 <a href="#" class="copyright-link">codewithsadee</a> All
+            &copy; 2024 <a href="#" class="copyright-link">code with TMMR </a> All
             Rights Reserved.
           </p>
         </div>
@@ -242,42 +242,5 @@
     ></script>
     
 
-
-    <!-- <script>
-    window.onscroll = function() {myFunction()};
-    
-    var navbar = document.getElementById('navbar')
-    var sticky = navbar.offsetTop;
-    
-    function myFunction() {
-      if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky")
-      } else {
-        navbar.classList.remove("sticky");
-      }
-    }
-    </script> -->
-
-    <!-- <script>
-        window.onscroll = function () {
-            myFunction();
-        };
-    
-        var navbar = document.getElementById("navbar");
-        var header = document.getElementById("header");
-        var sticky = navbar.offsetTop;
-    
-        function myFunction() {
-            var scrollPosition = window.pageYOffset;
-    
-            if (scrollPosition >= sticky) {
-                navbar.classList.add("sticky");
-                header.style.backgroundColor = "black"; // Set the background color for sticky navbar
-            } else {
-                navbar.classList.remove("sticky");
-                header.style.backgroundColor = "grey"; // Set to transparent or your default background color
-            }
-        }
-    </script> -->
   </body>
 </html>
