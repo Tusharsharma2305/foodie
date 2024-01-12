@@ -80,16 +80,18 @@ class CustomerTableBackend(ModelBackend):
         customer = customer_table.objects.get(user_id=request.user)
 
 
-        cart_check = cart_table.objects.get(food_id=foodItem,customer_id=customer)
-
-        if cart_check is None:
-            cartItem = cart_table(food_id=foodItem,customer_id=customer,quantity = 1)
-            cartItem.save()
-            print(cartItem)
-        else:
+        try:
+            cart_check = cart_table.objects.get(food_id=foodItem,customer_id=customer)
             cart_check.quantity = cart_check.quantity + 1
             cart_check.save()
-
+        except cart_table.DoesNotExist:
+            cartItem = cart_table(food_id=foodItem,customer_id=customer)
+            cartItem.quantity = 1
+            cartItem.save()
+            print(cartItem)
+           
+            print("The cart item does not exist.")
+        
         return HttpResponse("Success")
     
 

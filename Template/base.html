@@ -93,7 +93,7 @@
             <!-- Adding signout-singin nav - Manu -->
             {% if user.is_authenticated %}
             <li><a href="/gotocart" class="navbar-link"> Go To Cart </a></li>
-            <li><a href="/signout" class="navbar-link"> Log Out </a></li>
+            <li><a href="{% url 'signout' %}" class="navbar-link"> Log Out </a></li>
             <!-- <li><a href="#" class="navbar-link"> Welcome {{ fname }} </a></li> -->
             {% else %}
             <li><a href="/login" class="navbar-link"> Sign In </a></li>
