@@ -15,6 +15,7 @@ urlpatterns = [
     path('blog/',hv.blog,name='blog'),
     path('about/',hv.about,name='about'),
     path('shop/',hv.shop,name='shop'),
+    path('cart/',hv.cart,name='cart'),
     path('reservation/',hv.reservation,name='reservation'),
     path('dj-admin/', admin.site.urls),
     path('login/',hv.CustomerTableBackend.login_user, name='login'),
