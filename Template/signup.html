@@ -1,4 +1,17 @@
-{% extends "base.html" %} {% block content %} {% load static %}
+{% extends "base.html" %} 
+{% block content %} 
+{% load static %}
+{% if status %}
+<script>
+    alert('{{status}}');
+</script>
+{% endif %}
+
+{% if error %}
+<script>
+    alert('{{error}}');
+</script>
+{% endif %}
 
 <style>
   /* @extend display-flex; */
@@ -921,3 +934,39 @@
 <hr>
 
 {% endblock %}
+<!-- {% block script %}
+<script>
+    function checkPass(){
+        var p = $('#pass1').val();
+        var cp = $('#pass2').val();
+        if(p==cp){
+            $("#signup").attr('disabled',false).css({'background':'#6dabe4'});
+            $('#msz').html('');
+        }else{
+
+            $("#signup").attr('disabled',true).css({'background':'red'});
+            $('#msz').html("<small>Password didn't matched!</small>");
+
+        }
+    }
+
+    function check_email(){
+        var email = document.getElementById('email').value;
+        $.ajax({
+            url:'{% url "check_user_exist" %}',
+            type:'get',
+            data:{usern:email},
+            success:function(data){
+                if(data.status==0){
+                    $("#signup").attr('disabled',false).css({'background':'#719a0a'});
+                    $('#msz').html('');
+                }else{
+                    $("#signup").attr('disabled',true).css({'background':'red'});
+                    $('#msz').html("<small>"+data.message+"</small>");
+
+                }
+            }
+        })
+    }
+</script>
+{% endblock%} -->
