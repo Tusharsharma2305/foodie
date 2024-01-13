@@ -1,0 +1,103 @@
+{% extends 'admin-dashboard.html' %}
+
+{% block title %} Orders {% endblock %}
+
+{% block content %}
+
+<section class="category-table-section">
+    <div class="category-table-section">
+        <div class="report-container">
+            <div class="report-header">
+                <h1 class="recent-orders">Orders</h1>
+            </div>
+
+
+            <table class="report-body" style="width: 100%;">
+                <thead class="report-topic-head">
+                    <tr>
+                        <th class="t-op">Order Id</th>
+                        <th class="t-op">Paypal Id</th>
+                        <th class="t-op">Name</th>
+                        <th class="t-op">Email</th>
+                        <th class="t-op">Street</th>
+                        <th class="t-op">City</th>
+                        <th class="t-op">State</th>
+                        <th class="t-op">Paid</th>
+                        <th class="t-op">Price</th>
+                        <th class="t-op"></th>
+                    </tr>
+                </thead>
+                <tbody class="items12">
+                    {% for item in orders %}
+                    <tr>
+                        <td class="t-op-nextlvl">{{ item.order_id}}</td>
+                        <td class="t-op-nextlvl">{{ item.paypal_order_id}}</td>
+                        <td class="t-op-nextlvl">{{ item.name}}</td>
+                        <td class="t-op-nextlvl">{{ item.email}}</td>
+                        <td class="t-op-nextlvl">{{ item.street}}</td>
+                        <td class="t-op-nextlvl">{{ item.city}}</td>
+                        <td class="t-op-nextlvl">{{ item.state}}</td>
+                        <td class="t-op-nextlvl">{{ item.is_paid}}</td>
+                        <td class="t-op-nextlvl">{{ item.price}}</td>
+                        <td class="t-op-nextlvl">
+                           
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+
+<style>
+    .btn-edit,
+    .btn-delete,
+    .btn-add {
+        border: none;
+        color: white;
+        padding: 8px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+
+    .btn-edit,
+    .btn-add {
+        background-color: #008CBA;
+    }
+
+    .btn-delete {
+        background-color: #f44336;
+    }
+
+    /* Apply some basic styles to the table */
+    .report-body {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    /* Style the header cells */
+    .report-topic-head th {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border: 0px solid #ddd;
+        text-align: left;
+    }
+
+    /* Style the data cells */
+    .items12 td {
+        padding: 10px;
+        border: 0px solid #ddd;
+    }
+</style>
+
+{% endblock %}

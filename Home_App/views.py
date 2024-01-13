@@ -65,20 +65,6 @@ def check_authentication(request):
 def cart(request):
     customer = customer_table.objects.get(user_id=request.user)
     cart_items = cart_table.objects.filter(customer_id=customer).select_related('food_id')
-    print(cart_items)
-
-    # customer = customer_table.objects.get(user_id=request.user)
-    # orders = OrderModel.objects.filter(customer=customer)
-    # d = []
-
-    # for item in orders:
-    #     d.push(item.order_id)
-
-    # order_item = order_item_table.objects.filter(order_id__in = d)
-
-
-    print(cart_items)
-
     return render(request,'cart.html',{ "cart": cart_items })
 
 def cart_remove(request,cart_id):
@@ -101,6 +87,11 @@ def cart_quantity_remove(request,cart_id):
         cart.save()
     return redirect('cart')
 
+
+def admin_orders(request):
+    orders = OrderModel.objects.all()
+    order_items = order_item_table.objects.all()
+    return render(request,"admin-dashboard-orders.html",{ "orders": orders,"order_items": order_items })
 
 
     # Obtain access token
@@ -280,25 +271,26 @@ class CustomerTableBackend(ModelBackend):
                 print("Authenticated as customer:", user)
 
                 # Log in the user
-                login(request, user)  # Specify the backend
+                login(request, user,backend='Home_App.views.CustomerTableBackend')  # Specify the backend
                 request.session['islogin'] = True
-                print(request.user.id)
-                fname = user.first_name
+                print(request.user.id)  
+                fname = request.user.first_name
                 return render(request, "index.html", {'fname': fname})
 
             except customer_table.DoesNotExist:
                 # Handle invalid credentials
 
-                print("thi sis exception")
+                print("this is exception")
                 messages.error(request, "Invalid Credentials!")
-                return redirect('index')
+                # return redirect('index')
+                return render(request, 'login.html')
 
         return render(request, 'login.html')
         
  
-User = get_user_model()
 # For Admin auntheciation check krna hai
 class AdminTableBackend(ModelBackend):
+    User = get_user_model()
     def authenticate(self, request, user_name=None, password=None, **kwargs):
         try:
             #check if the credentials are in admin table or not
@@ -329,7 +321,7 @@ class AdminTableBackend(ModelBackend):
 
             if user is not None:
                 # User credentials are correct, then log in the user
-                login(request, user)
+                login(request, user, backend='Home_App.views.AdminTableBackend')
                 return render(request, "admin-dashboard.html", {'user_name': user_name})
             
             else:

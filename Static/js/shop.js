@@ -1,12 +1,10 @@
-const imgSource = "images/food-menu-1.png";
-
 const listItem = ` <li>
 <div class="food-menu-card">
   <div class="card-banner">
     <img
-      src="${imgSource}"
+      src="{{imgSource}}"
       width="300"
-      height="300"
+      height="100"
       loading="lazy"
       alt="{{imgAlt}}"
       class="w-100"

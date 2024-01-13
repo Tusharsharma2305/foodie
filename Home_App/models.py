@@ -56,7 +56,7 @@ class food_table(models.Model):
     food_title = models.CharField(max_length=30)
     description = models.CharField(max_length=50)
     price = models.IntegerField()
-    img_name = models.CharField(max_length=20)
+    img_name = models.CharField(max_length=500)
     category_id = models.ForeignKey(category_table,on_delete=models.CASCADE)
     feature = models.CharField(max_length=20)
     

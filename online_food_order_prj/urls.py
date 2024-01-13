@@ -46,6 +46,7 @@ urlpatterns = [
     path('admin-dashboard-foodItems-delete/<int:food_id>/',hv.delete_foodItems,name='delete_food'),
     path('admin-dashboard-foodItems-add/',hv.add_foodItems,name='admin-dashboard-foodItems-add'),
 
+    path('admin-dashboard-orders/',hv.admin_orders,name='admin-dashboard-orders'),
     # Need to ask
     
     path('make_reservation/', hv.make_reservation, name='make_reservation'),
